@@ -62,6 +62,8 @@ $ npm run test:cov
 
 ```bash
 $ npx prisma init --datasource-provider SQLite
+
+npx prisma studio
 ```
 
 ## Support
