@@ -4,6 +4,6 @@ import { MailService } from './mail.service';
 @Injectable()
 export class SMTPMailService implements MailService {
   sendEmail(): string {
-    return 'Email enviado';
+    return 'SMTPMail';
   }
 }
