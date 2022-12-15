@@ -26,6 +26,8 @@ export class SendNotification {
       recipientId,
     });
 
+    await this.notificationsRepository.create(notification);
+
     // Persistir essa notificação no banco de dados
 
     return {
