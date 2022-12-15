@@ -20,5 +20,7 @@ describe('Send Notification', () => {
     });
 
     expect(notification).toBeTruthy();
+    console.log(notifications);
+    expect(notifications).toHaveLength(1);
   });
 });
