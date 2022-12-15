@@ -1,9 +1,11 @@
 import { SendNotification } from './send-notification';
 import { Notification } from '../entities/notification';
 
+const notifications: Notification[] = [];
+
 const notificationRepository = {
   async create(notification: Notification) {
-    console.log(notification);
+    notifications.push(notification);
   },
 };
 
