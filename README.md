@@ -65,6 +65,7 @@ $ npx prisma init --datasource-provider SQLite
 
 npx prisma studio
 
+##  atualiza o banco de dados quando tiver alterações, importante ele sobrescreve o banco antigo
 npx prisma migrate dev
 ```
 
