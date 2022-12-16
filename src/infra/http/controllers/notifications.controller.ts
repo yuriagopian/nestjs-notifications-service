@@ -15,6 +15,6 @@ export class NotificationsController {
       recipientId,
     });
 
-    return notification;
+    return { notification };
   }
 }
