@@ -58,12 +58,14 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-## Prisma comands
+## Prisma commands
 
 ```bash
 $ npx prisma init --datasource-provider SQLite
 
 npx prisma studio
+
+npx prisma migrate dev
 ```
 
 ## Support
