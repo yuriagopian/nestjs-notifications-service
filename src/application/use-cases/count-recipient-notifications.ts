@@ -17,18 +17,14 @@ export class CountRecipientNotifications {
   async execute(
     request: CountRecipientNotificationsRequest,
   ): Promise<CountRecipientNotificationsResponse> {
-    const { notificationId } = request;
+    const { recipientId } = request;
 
-    const notification = await this.notificationsRepository.findById(
-      notificationId,
+    const count = await this.notificationsRepository.countManyByRecipientId(
+      recipientId,
     );
 
-    if (!notification) {
-      throw new NotificationNotFound();
-    }
-
-    notification.cancel();
-
-    await this.notificationsRepository.save(notification);
+    return {
+      count,
+    };
   }
 }
