@@ -2,38 +2,42 @@ import { InMemoryNotificationRepository } from '@test/repositories/in-memory-not
 import { CancelNotification } from './cancel-notification';
 import { Notification } from '@application/entities/notification';
 import { Content } from '@application/entities/content';
-import { NotificationNotFound } from './errors/notification-not-found';
+import { CountRecipientNotifications } from './count-recipient-notifications';
 
-describe('Send Notification', () => {
-  it('should be able to cancel a notification', async () => {
+describe('Count Recipients notification', () => {
+  it('should be able to count recipient notifications', async () => {
     const notificationsRepository = new InMemoryNotificationRepository();
-    const cancelNotification = new CancelNotification(notificationsRepository);
-
-    const notification = new Notification({
-      category: 'social',
-      content: new Content('Nova solicitação de amizade'),
-      recipientId: 'example-recipient-id',
-    });
-
-    await notificationsRepository.create(notification);
-
-    await cancelNotification.execute({
-      notificationId: notification.id,
-    });
-
-    expect(notificationsRepository.notifications[0].canceledAt).toEqual(
-      expect.any(Date),
+    const countRecipientNotification = new CountRecipientNotifications(
+      notificationsRepository,
     );
-  });
 
-  it('should not be able to cancel a non existing notification', async () => {
-    const notificationsRepository = new InMemoryNotificationRepository();
-    const cancelNotification = new CancelNotification(notificationsRepository);
+    await notificationsRepository.create(
+      new Notification({
+        category: 'social',
+        content: new Content('Nova solicitação de amizade'),
+        recipientId: 'recipient-1',
+      }),
+    );
 
-    expect(() => {
-      return cancelNotification.execute({
-        notificationId: 'fake-notification-id',
-      });
-    }).rejects.toThrow(NotificationNotFound);
+    await notificationsRepository.create(
+      new Notification({
+        category: 'social',
+        content: new Content('Nova solicitação de amizade'),
+        recipientId: 'recipient-1',
+      }),
+    );
+    await notificationsRepository.create(
+      new Notification({
+        category: 'social',
+        content: new Content('Nova solicitação de amizade'),
+        recipientId: 'recipient-2',
+      }),
+    );
+
+    const { count } = await countRecipientNotification.execute({
+      recipientId: 'recipient-1',
+    });
+
+    expect(count).toEqual(2);
   });
 });
