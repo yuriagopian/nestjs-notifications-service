@@ -4,7 +4,7 @@ import { Notification } from '@application/entities/notification';
 import { Content } from '@application/entities/content';
 
 describe('Send Notification', () => {
-  it('should be able to send a notification', async () => {
+  it('should be able to cancel a notification', async () => {
     const notificationsRepository = new InMemoryNotificationRepository();
     const cancelNotification = new CancelNotification(notificationsRepository);
 
