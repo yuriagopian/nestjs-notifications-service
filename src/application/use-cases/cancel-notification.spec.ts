@@ -2,6 +2,7 @@ import { InMemoryNotificationRepository } from '@test/repositories/in-memory-not
 import { CancelNotification } from './cancel-notification';
 import { Notification } from '@application/entities/notification';
 import { Content } from '@application/entities/content';
+import { NotificationNotFound } from './errors/notification-not-found';
 
 describe('Send Notification', () => {
   it('should be able to cancel a notification', async () => {
@@ -23,5 +24,16 @@ describe('Send Notification', () => {
     expect(notificationsRepository.notifications[0].canceledAt).toEqual(
       expect.any(Date),
     );
+  });
+
+  it('should not be able to cancel a non existing notification', async () => {
+    const notificationsRepository = new InMemoryNotificationRepository();
+    const cancelNotification = new CancelNotification(notificationsRepository);
+
+    expect(() => {
+      return cancelNotification.execute({
+        notificationId: 'fake-notification-id',
+      });
+    }).rejects.toThrow(NotificationNotFound);
   });
 });
