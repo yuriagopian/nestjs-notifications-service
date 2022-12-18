@@ -28,10 +28,7 @@ export class SendNotification {
       category,
     });
 
-    const notificationCreated = await this.notificationsRepository.create(
-      notification,
-    );
-    console.log(notificationCreated);
+    await this.notificationsRepository.create(notification);
 
     return {
       notification,
